@@ -21,42 +21,7 @@ python -m src.run_halueval \
   --out results/halueval_gemini_100.csv
 
 
-#Results (HaluEval, n=100 questions → 200 judgments)Rank
-Model
-Accuracy
-Precision
-Recall
-F1
-Unparseable
-1
-muse-spark-1.1
-0.879
-0.963
-0.790
-0.868
-1
-2
-gemini-3.7-flash
-0.874
-0.963
-0.780
-0.862
-1
-3
-grok-4.6
-0.873
-0.963
-0.778
-0.860
-3
-4
-claude-sonnet-5
-0.870
-0.963
-0.770
-0.856
-0
-
+#short analysis
 Metric notesPrecision high (~0.96): models rarely flag factual answers as hallucinations.
 Recall lower (~0.77–0.79): models miss a non-trivial share of true hallucinations.
 F1 spread is small (<0.015): on this slice, models are close; treat ranking as indicative.

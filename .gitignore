@@ -1,0 +1,25 @@
+cat > .gitignore << 'EOF'
+# secrets
+.env
+*.env
+.env.*
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+catta/
+
+# data & heavy results
+*.parquet
+data/
+
+# editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.bak
+*.swp
+EOF

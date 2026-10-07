@@ -1,0 +1,5 @@
+accuracy,precision,recall,f1,yes_ratio,unparseable,n_rows,model,file
+0.87,0.9625,0.77,0.8556,0.4,0,200,claude-sonnet-5,halueval_claude_100.csv
+0.8744,0.963,0.78,0.8619,0.407,1,200,gemini-3.7-flash,halueval_gemini_100.csv
+0.8731,0.9625,0.7778,0.8603,0.4061,3,200,grok-4.6,halueval_grok_100.csv
+0.8794,0.9634,0.79,0.8681,0.4121,1,200,muse-spark-1.1,halueval_muse-spark_100.csv

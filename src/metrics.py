@@ -1,22 +1,22 @@
-"""Metrics computation for HaluEval and SimpleQA."""
+"""Classification metrics for HaluEval."""
 from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
-import pandas as pd
 
 
 def halueval_metrics(y_true, y_pred):
     """
-    y_true, y_pred: lists of 0/1 where 1 = hallucination (YES).
-    Returns dict with accuracy, precision, recall, f1, yes_ratio.
+    Binary classification metrics for hallucination detection.
+    y_true / y_pred: 0 = factual, 1 = hallucination (YES).
+
+    Returns accuracy, precision, recall, f1, yes_ratio.
     """
     y_true = [int(v) for v in y_true]
     y_pred = [int(v) for v in y_pred]
-
     return {
-        "accuracy": accuracy_score(y_true, y_pred),
-        "precision": precision_score(y_true, y_pred, zero_division=0),
-        "recall": recall_score(y_true, y_pred, zero_division=0),
-        "f1": f1_score(y_true, y_pred, zero_division=0),
-        "yes_ratio": sum(y_pred) / len(y_pred) if y_pred else 0.0,
+        "accuracy": float(accuracy_score(y_true, y_pred)),
+        "precision": float(precision_score(y_true, y_pred, zero_division=0)),
+        "recall": float(recall_score(y_true, y_pred, zero_division=0)),
+        "f1": float(f1_score(y_true, y_pred, zero_division=0)),
+        "yes_ratio": (sum(y_pred) / len(y_pred)) if y_pred else 0.0,
     }
 
 

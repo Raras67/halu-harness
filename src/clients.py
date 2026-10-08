@@ -1,10 +1,10 @@
-# src/clients.py
 """
 Unified OpenAI-compatible client.
 
 Works with ANY router exposing /v1/chat/completions in OpenAI format:
 CleanAPIs, OpenRouter, Together, Groq, Fireworks, xAI, local vLLM/Ollama.
 """
+import random
 import os
 import time
 from typing import Optional, List
@@ -68,36 +68,33 @@ class RouterClient:
             default_headers=default_headers or None,
         )
 
-    def generate(
-        self,
-        model: str,
-        prompt: str,
-        temperature: float = 0.0,
-        max_tokens: int = 256,
-        system: Optional[str] = None,
-    ) -> str:
-        messages = []
-        if system:
-            messages.append({"role": "system", "content": system})
-        messages.append({"role": "user", "content": prompt})
+  def generate(self, model, prompt, temperature=0.0, max_tokens=256, system=None):
+    messages = []
+    if system:
+        messages.append({"role": "system", "content": system})
+    messages.append({"role": "user", "content": prompt})
 
-        last_error: Optional[Exception] = None
-        for attempt in range(4):
-            try:
-                response = self.client.chat.completions.create(
-                    model=model,
-                    messages=messages,
-                    temperature=temperature,
-                    max_tokens=max_tokens,
-                )
-                return (response.choices[0].message.content or "").strip()
-            except Exception as e:
-                last_error = e
-                time.sleep(2 ** attempt)
+    last_error = None
+    max_attempts = 4
+    for attempt in range(max_attempts):
+        try:
+            response = self.client.chat.completions.create(
+                model=model,
+                messages=messages,
+                temperature=temperature,
+                max_tokens=max_tokens,
+            )
+            return (response.choices[0].message.content or "").strip()
+        except Exception as e:
+            last_error = e
+            sleep_s = (2 ** attempt) + random.uniform(0, 0.5)
+            print(f"[retry] model={model} attempt={attempt+1}/{max_attempts} "
+                  f"sleep={sleep_s:.1f}s err={e}")
+            time.sleep(sleep_s)
 
-        raise RuntimeError(
-            f"RouterClient failed after retries for model={model}: {last_error}"
-        )
+    raise RuntimeError(
+        f"RouterClient failed after {max_attempts} retries for model={model}: {last_error}"
+    )
 
     def list_models(self) -> List[str]:
         try:

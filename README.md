@@ -11,16 +11,20 @@ Lightweight, OpenAI-compatible harness for measuring **hallucination detection**
 - Unit tests for YES/NO parsing
 
 ## Setup  
-```bashpython -m venv .venv && source .venv/bin/activate```  
-```bashpip install -r requirements.txt```  
-```bashcp .env.example .env```     
+```bash
+python -m venv .venv && source .venv/bin/activate  
+pip install -r requirements.txt  
+cp .env.example .env     
 .env=API_KEY, BASE_URL
+```
 
 ## run
-```bashpython -m src.run_halueval \ --model "gemini-3.7-flash" \ --n-samples 100 \ --out results/halueval_gemini_100.csv```
+```bash
+python -m src.run_halueval \ --model "gemini-3.7-flash" \ --n-samples 100 \ --out results/halueval_gemini_100.csv
 
-```bashPYTHONPATH=. python scripts/compare_results.py```   
-```bashPYTHONPATH=. pytest -q```
+PYTHONPATH=. python scripts/compare_results.py
+bashPYTHONPATH=. pytest -q
+```
 
 ## SHORT_ANALYSIS  
 Metric notesPrecision high (~0.96): models rarely flag factual answers as hallucinations.

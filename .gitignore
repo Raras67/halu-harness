@@ -1,8 +1,8 @@
-cat > .gitignore << 'EOF'
 # secrets
 .env
 *.env
 .env.*
+!.env.example
 
 # python
 __pycache__/
@@ -13,8 +13,16 @@ venv/
 catta/
 
 # data & heavy results
+results/*
+!results/summary_*.csv
+!results/.gitkeep
 *.parquet
 data/
+
+# tests / cache
+.pytest_cache/
+.coverage
+htmlcov/
 
 # editor / OS
 .DS_Store
@@ -22,4 +30,3 @@ data/
 .vscode/
 *.bak
 *.swp
-EOF
